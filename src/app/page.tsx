@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function Home() {
   return (
@@ -21,12 +23,9 @@ export default function Home() {
             <p className="text-white text-lg mb-8">
               Website inklusif yang mempermudah penyandang disabilitas dalam melaporkan tindakan kriminal secara online.
             </p>
-            <Link
-              href="/contact"
-              className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded-full inline-block"
-            >
-              Contact Us
-            </Link>
+            <Button className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded-full" asChild>
+              <Link href="/contact">Contact Us</Link>
+            </Button>
           </div>
         </div>
       </div>
@@ -34,22 +33,30 @@ export default function Home() {
       {/* Stats Section */}
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-          <div className="bg-blue-800 p-6 rounded-lg">
-            <h2 className="text-white text-5xl font-bold mb-2">100</h2>
-            <p className="text-white">Happy Clients</p>
-          </div>
-          <div className="bg-blue-800 p-6 rounded-lg">
-            <h2 className="text-white text-5xl font-bold mb-2">150</h2>
-            <p className="text-white">Case Completed</p>
-          </div>
-          <div className="bg-blue-800 p-6 rounded-lg">
-            <h2 className="text-white text-5xl font-bold mb-2">200</h2>
-            <p className="text-white">Case Closed</p>
-          </div>
-          <div className="bg-blue-800 p-6 rounded-lg">
-            <h2 className="text-white text-5xl font-bold mb-2">300</h2>
-            <p className="text-white">Case Dismiss</p>
-          </div>
+          <Card className="bg-blue-800 border-none">
+            <CardContent className="p-6">
+              <h2 className="text-white text-5xl font-bold mb-2">100</h2>
+              <p className="text-white">Happy Clients</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-blue-800 border-none">
+            <CardContent className="p-6">
+              <h2 className="text-white text-5xl font-bold mb-2">150</h2>
+              <p className="text-white">Case Completed</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-blue-800 border-none">
+            <CardContent className="p-6">
+              <h2 className="text-white text-5xl font-bold mb-2">200</h2>
+              <p className="text-white">Case Closed</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-blue-800 border-none">
+            <CardContent className="p-6">
+              <h2 className="text-white text-5xl font-bold mb-2">300</h2>
+              <p className="text-white">Case Dismiss</p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

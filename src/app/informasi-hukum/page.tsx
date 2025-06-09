@@ -1,5 +1,6 @@
 import Image from "next/image"
-import { Book, Accessibility, Briefcase, Hospital, Scale, Users } from "lucide-react"
+import { Book, Accessibility, Briefcase, Hospital, Scale, Users, Gavel } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function InformasiHukum() {
   return (
@@ -13,13 +14,7 @@ export default function InformasiHukum() {
           <div className="max-w-4xl">
             <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 flex items-center">
               Pusat Pengetahuan Hukum
-              <Image
-                src="/images/palu.jpg"
-                alt="Gavel icon"
-                width={360}
-                height={360}
-                className="ml-4"
-              />
+              <Gavel size={80} className="ml-4 text-white" />
             </h1>
           </div>
         </div>
@@ -27,47 +22,61 @@ export default function InformasiHukum() {
         <h2 className="text-white text-2xl font-bold mb-8">Hak - Hak Penyandang Disabilitas</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Book size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Pendidikan</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Book size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">Hak Pendidikan</h3>
+            </CardContent>
+          </Card>
 
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Accessibility size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Aksesibilitas</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Accessibility size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">Hak Aksesibilitas</h3>
+            </CardContent>
+          </Card>
 
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Briefcase size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Pekerjaan</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Briefcase size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">Hak Pekerjaan</h3>
+            </CardContent>
+          </Card>
 
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Hospital size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Pelayanan Kesehatan</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Hospital size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">Hak Pelayanan Kesehatan</h3>
+            </CardContent>
+          </Card>
 
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Scale size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Perlindungan Hukum</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Scale size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">Hak Perlindungan Hukum</h3>
+            </CardContent>
+          </Card>
 
-          <div className="bg-blue-950 p-6 rounded-lg flex flex-col items-center">
-            <div className="bg-blue-900 p-4 rounded-lg mb-4">
-              <Users size={64} className="text-white" />
-            </div>
-            <h3 className="text-white text-xl font-medium text-center">Hak Berpartisipasi dalam Sosial dan Politik</h3>
-          </div>
+          <Card className="bg-blue-950 border-none">
+            <CardContent className="p-6 flex flex-col items-center">
+              <div className="bg-blue-900 p-4 rounded-lg mb-4">
+                <Users size={64} className="text-white" />
+              </div>
+              <h3 className="text-white text-xl font-medium text-center">
+                Hak Berpartisipasi dalam Sosial dan Politik
+              </h3>
+            </CardContent>
+          </Card>
         </div>
 
         <h2 className="text-white text-2xl font-bold mb-8">Bagaimana cara melaporkan pelanggaran</h2>
@@ -80,13 +89,7 @@ export default function InformasiHukum() {
 
           <div className="flex flex-col items-center">
             <div className="relative">
-              <Image
-                src="/images/lapor1.png"
-                alt="Step 2"
-                width={300}
-                height={200}
-                className="mb-4"
-              />
+              <Image src="/images/lapor1.png" alt="Step 2" width={300} height={200} className="mb-4" />
               <div className="absolute top-1/2 -right-12 transform -translate-y-1/2 hidden md:block">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -104,13 +107,7 @@ export default function InformasiHukum() {
 
           <div className="flex flex-col items-center">
             <div className="relative">
-              <Image
-                src="/images/lapor2.png"
-                alt="Step 3"
-                width={300}
-                height={200}
-                className="mb-4"
-              />
+              <Image src="/images/lapor2.png" alt="Step 3" width={300} height={200} className="mb-4" />
               <div className="absolute top-1/2 -left-12 transform -translate-y-1/2 hidden md:block">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

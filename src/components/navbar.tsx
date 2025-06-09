@@ -1,12 +1,10 @@
 "use client"
-
-import { useState } from "react"
 import Link from "next/link"
 import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-
   return (
     <nav className="bg-blue-900 py-4">
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -39,71 +37,52 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <button className="text-white">
+          <Button variant="ghost" size="icon" className="text-white">
             <Search size={20} />
-          </button>
-          <Link href="/login" className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-md">
-            Log in
+          </Button>
+          <Link href="/login">
+            <Button className="bg-amber-600 hover:bg-amber-700 text-white">Log in</Button>
           </Link>
         </div>
 
-        {/* Mobile Navigation Toggle */}
-        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-blue-800 mt-2 py-2">
-          <div className="container mx-auto px-6 flex flex-col space-y-2">
-            <Link href="/" className="text-white hover:bg-blue-700 px-3 py-2 rounded" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-            <Link
-              href="/laporan-kejadian"
-              className="text-white hover:bg-blue-700 px-3 py-2 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Laporan Kejadian
-            </Link>
-            <Link
-              href="/informasi-hukum"
-              className="text-white hover:bg-blue-700 px-3 py-2 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Informasi Hukum
-            </Link>
-            <Link
-              href="/tentang-kami"
-              className="text-white hover:bg-blue-700 px-3 py-2 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Tentang Kami
-            </Link>
-            <Link
-              href="/login"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Log in
-            </Link>
-          </div>
+        {/* Mobile Navigation */}
+        <div className="md:hidden flex items-center">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-white">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-blue-800 text-white">
+              <div className="flex flex-col space-y-4 mt-6">
+                <Link href="/" className="text-white hover:bg-blue-700 px-3 py-2 rounded">
+                  Home
+                </Link>
+                <Link href="/laporan-kejadian" className="text-white hover:bg-blue-700 px-3 py-2 rounded">
+                  Laporan Kejadian
+                </Link>
+                <Link href="/informasi-hukum" className="text-white hover:bg-blue-700 px-3 py-2 rounded">
+                  Informasi Hukum
+                </Link>
+                <Link href="/tentang-kami" className="text-white hover:bg-blue-700 px-3 py-2 rounded">
+                  Tentang Kami
+                </Link>
+                <Link href="/login">
+                  <Button className="bg-amber-600 hover:bg-amber-700 w-full">Log in</Button>
+                </Link>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
-      )}
+      </div>
     </nav>
   )
 }
