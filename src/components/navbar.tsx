@@ -40,9 +40,9 @@ export default function Navbar() {
           <Button variant="ghost" size="icon" className="text-white">
             <Search size={20} />
           </Button>
-          <Link href="/login">
-            <Button className="bg-amber-600 hover:bg-amber-700 text-white">Log in</Button>
-          </Link>
+          <Button className="bg-amber-600 hover:bg-amber-700 text-white" asChild>
+            <Link href="/login">Log in</Link>
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
@@ -75,9 +75,9 @@ export default function Navbar() {
                 <Link href="/tentang-kami" className="text-white hover:bg-blue-700 px-3 py-2 rounded">
                   Tentang Kami
                 </Link>
-                <Link href="/login">
-                  <Button className="bg-amber-600 hover:bg-amber-700 w-full">Log in</Button>
-                </Link>
+                <Button className="bg-amber-600 hover:bg-amber-700 w-full" asChild>
+                  <Link href="/login">Log in</Link>
+                </Button>
               </div>
             </SheetContent>
           </Sheet>
