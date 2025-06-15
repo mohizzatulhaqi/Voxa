@@ -1,21 +1,26 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowLeft, Download, Eye } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft, Download, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function DetailLaporan() {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-6 py-8">
         <div className="flex justify-between items-center mb-8">
-          <Link href="/laporan-kejadian">
-            <Button variant="outline" size="icon" className="bg-white rounded-full h-12 w-12">
+          <Link href="/riwayat">
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-white rounded-full h-12 w-12"
+            >
               <ArrowLeft className="text-blue-900" />
             </Button>
           </Link>
 
-          <div className="text-white">Home / Laporan Kejadian</div>
+          <Breadcrumb />
         </div>
 
         <Card>
@@ -49,9 +54,10 @@ export default function DetailLaporan() {
             <div className="mb-6">
               <h2 className="text-gray-500 mb-1">Deskripsi Pelanggaran</h2>
               <p className="font-medium">
-                Pegawai Bernama Hermawan melakukan penipuan mengenai biaya pembayaran paket vendor yang di sewa
-                (pungil). Setiap meminta pertolongan mengenai paket vendor pelaku selalu meminta bayaran lebih dengan
-                alasan biaya paket vendor.
+                Pegawai Bernama Hermawan melakukan penipuan mengenai biaya
+                pembayaran paket vendor yang di sewa (pungil). Setiap meminta
+                pertolongan mengenai paket vendor pelaku selalu meminta bayaran
+                lebih dengan alasan biaya paket vendor.
               </p>
             </div>
 
@@ -94,5 +100,5 @@ export default function DetailLaporan() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
