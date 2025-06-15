@@ -18,7 +18,6 @@ import {
   Trash2,
 } from "lucide-react";
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
 
 interface Step2FormProps {
   onSubmit: (e: React.FormEvent) => void;

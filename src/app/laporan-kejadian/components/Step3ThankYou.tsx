@@ -1,8 +1,8 @@
+// Step3ThankYou.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface Step3ThankYouProps {
   onBackToHome: () => void;
@@ -13,17 +13,6 @@ export function Step3ThankYou({
   onBackToHome,
   onGoToHistory,
 }: Step3ThankYouProps) {
-  const router = useRouter();
-
-  const handleBack = () => {
-    router.push("/home");
-  };
-
-  const handleGoToHistory = () => {
-    // Ganti dengan route yang sesuai untuk halaman riwayat
-    router.push("/riwayat");
-  };
-
   return (
     <div className="p-8 bg-white rounded-lg shadow-md text-center">
       {/* Success Icon */}
@@ -50,7 +39,7 @@ export function Step3ThankYou({
         <Button
           type="button"
           variant="outline"
-          onClick={handleBack}
+          onClick={onBackToHome}
           className="bg-white text-blue-900 border-blue-900 hover:bg-gray-50 h-12 px-8 text-base font-medium"
         >
           Kembali ke Home
@@ -58,7 +47,7 @@ export function Step3ThankYou({
 
         <Button
           type="button"
-          onClick={handleGoToHistory}
+          onClick={onGoToHistory}
           className="bg-[#A87C2D] hover:bg-[#c8a047] text-white h-12 px-8 text-base font-medium"
         >
           Lihat Riwayat Laporan

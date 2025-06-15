@@ -10,7 +10,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
 
   return (
     <div className="flex mb-8">
-      {steps.map((step, index) => (
+      {steps.map((step) => (
         <div
           key={step.number}
           className={`flex-1 pb-2 ${

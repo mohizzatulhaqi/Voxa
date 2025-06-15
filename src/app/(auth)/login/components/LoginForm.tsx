@@ -3,22 +3,17 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
-interface LoginFormProps {
-  //props
-}
-
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log({ email, password, rememberMe });
-    //logika submit
+    // Submit logic here
   };
-
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="min-h-screen bg-blue-800 flex items-center justify-center px-4">
@@ -70,7 +65,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
               Password <span className="text-red-500">*</span>
             </label>
 
-            {/* wrapper agar ikon bisa absolute di dalamnya */}
             <div className="relative">
               <input
                 id="password"
@@ -83,12 +77,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 required
               />
 
-              {/* ikon di kanan‑tengah */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute top-1/2 right-3 -translate-y-1/2
                  text-gray-600 hover:text-amber-600 focus:outline-none"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={25} /> : <Eye size={25} />}
               </button>
