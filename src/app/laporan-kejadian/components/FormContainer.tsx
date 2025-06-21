@@ -7,9 +7,9 @@ import { Step3ThankYou } from "./Step3ThankYou";
 
 interface FormContainerProps {
   step: number;
-  onNext: () => void;
-  onBack: () => void;
-  onSubmit: (e: React.FormEvent) => void;
+  onNext: (data: any) => void;
+  onBack: (data?: any) => void;
+  onSubmit: (data: any) => void;
   onBackToHome: () => void;
   onGoToHistory: () => void;
 }

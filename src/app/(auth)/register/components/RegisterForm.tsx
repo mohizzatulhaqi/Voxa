@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const RegisterForm: React.FC = () => {
   const [fullName, setFullName] = useState("");
@@ -12,9 +13,35 @@ const RegisterForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log({ fullName, email, password, confirmPassword });
+    if (!fullName || !email || !password || !confirmPassword) {
+      alert("Semua field wajib diisi");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Password dan konfirmasi password tidak sama");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ full_name: fullName, email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Registrasi berhasil, silakan login!");
+        router.push("/login");
+      } else {
+        alert(data.message || "Registrasi gagal");
+      }
+    } catch (err) {
+      alert("Terjadi kesalahan saat registrasi");
+    }
   };
 
   return (

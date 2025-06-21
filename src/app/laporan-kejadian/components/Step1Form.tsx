@@ -18,13 +18,15 @@ import { Calendar as CalendarIcon, Clock, MapPin } from "lucide-react";
 import { useState } from "react";
 
 interface Step1FormProps {
-  onNext: () => void;
+  onNext: (data: any) => void;
 }
 
 export function Step1Form({ onNext }: Step1FormProps) {
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -51,7 +53,14 @@ export function Step1Form({ onNext }: Step1FormProps) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onNext();
+        onNext({
+          incident_time: time,
+          incident_location: location,
+          category_id: category,
+          incident_date: date ? date.toISOString().split("T")[0] : "",
+          incident_description: description,
+          violation_description: description,
+        });
       }}
       className="p-6 bg-white rounded-lg shadow-md"
     >
@@ -114,10 +123,13 @@ export function Step1Form({ onNext }: Step1FormProps) {
               id="kategori"
               className="w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-gray-900 focus:border-blue-500 focus:ring-blue-500 focus:outline-none h-12 text-base"
               required
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="membuli">Membuli</option>
-              <option value="diskriminasi">Diskriminasi</option>
-              <option value="kekerasan">Kekerasan</option>
+              <option value="">Pilih kategori</option>
+              <option value="1">Membuli</option>
+              <option value="2">Diskriminasi</option>
+              <option value="3">Kekerasan</option>
             </select>
           </div>
           <p className="text-sm text-gray-500">Pilih kategori pelanggaran</p>
@@ -168,6 +180,8 @@ export function Step1Form({ onNext }: Step1FormProps) {
           rows={6}
           required
           className="bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 text-base min-h-[150px]"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <p className="text-sm text-gray-500">Deskripsikan dengan jelas</p>
       </div>

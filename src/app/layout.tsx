@@ -11,16 +11,12 @@ export const metadata: Metadata = {
   description: "Portal pelaporan dan pusat informasi hukum untuk penyandang disabilitas",
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <body className={`${inter.className} bg-blue-900`}>
+      <body className={inter.className}>
         <Navbar />
-        <main>{children}</main>
+        {children}
       </body>
     </html>
   )

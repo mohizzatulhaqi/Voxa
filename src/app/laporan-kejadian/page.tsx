@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FormContainer } from "./components/FormContainer";
 import { HeroSection } from "./components/HeroSection";
@@ -9,24 +9,46 @@ import { TitleSection } from "./components/TittleSection";
 
 export default function LaporanKejadian() {
   const [step, setStep] = useState(1);
+  const [step1Data, setStep1Data] = useState<any>({});
+  const [step2Data, setStep2Data] = useState<any>({});
   const router = useRouter();
 
-  const handleNext = () => {
+  // Handler untuk step1
+  const handleStep1Next = (data: any) => {
+    setStep1Data(data);
     setStep(2);
   };
-
-  const handleBack = () => {
-    setStep(1);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Simulasi proses pengiriman laporan
-    console.log("Form submitted");
-
-    // Pindah ke step 3 (halaman terima kasih)
-    setStep(3);
+  // Handler untuk step2
+  const handleStep2Submit = async (data: any) => {
+    setStep2Data(data);
+    // Kirim ke backend
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("incident_description", step1Data.incident_description);
+    formData.append("incident_time", step1Data.incident_time);
+    formData.append("category_id", step1Data.category_id);
+    formData.append("incident_location", step1Data.incident_location);
+    formData.append("incident_date", step1Data.incident_date);
+    formData.append("violation_description", step1Data.violation_description);
+    // File
+    (data.files || []).forEach((file: File) => {
+      formData.append("files", file);
+    });
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/reports`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStep(3);
+      } else {
+        alert(result.message || "Gagal mengirim laporan");
+      }
+    } catch (err) {
+      alert("Terjadi kesalahan saat mengirim laporan");
+    }
   };
 
   const handleBackToHome = () => {
@@ -34,13 +56,12 @@ export default function LaporanKejadian() {
   };
 
   const handleGoToHistory = () => {
-    // Ganti dengan route yang sesuai untuk halaman riwayat
-    router.push("/riwayat-laporan");
+    router.push("/riwayat");
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-6 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-700">
+      <div className="container mx-auto px-4 py-12">
         {/* Hero Section - hanya tampil di step 1 dan 2 */}
         {step < 3 && <HeroSection />}
 
@@ -62,9 +83,9 @@ export default function LaporanKejadian() {
 
         <FormContainer
           step={step}
-          onNext={handleNext}
-          onBack={handleBack}
-          onSubmit={handleSubmit}
+          onNext={handleStep1Next}
+          onBack={() => setStep(1)}
+          onSubmit={handleStep2Submit}
           onBackToHome={handleBackToHome}
           onGoToHistory={handleGoToHistory}
         />

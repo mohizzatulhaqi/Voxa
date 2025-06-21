@@ -20,7 +20,7 @@ import {
 import { useState, useRef } from "react";
 
 interface Step2FormProps {
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (data: { files: File[]; audio?: File }) => void;
   onBack: () => void;
 }
 
@@ -436,14 +436,15 @@ export function Step2Form({ onSubmit, onBack }: Step2FormProps) {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (mediaFiles.length === 0) {
       alert("Minimal 1 bukti foto/video wajib diupload");
       return;
     }
-
-    // Call parent onSubmit with form data
-    onSubmit(e);
+    // Kirim file ke parent
+    onSubmit({
+      files: mediaFiles.map((m) => m.file),
+      audio: audioFile || undefined,
+    });
   };
 
   return (

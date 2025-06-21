@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -9,10 +10,35 @@ const LoginForm: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const router = useRouter();
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log({ email, password, rememberMe });
-    // Submit logic here
+    try {
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.success && data.token && data.user) {
+        // Simpan token dan user
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        // Cek role admin
+        if (data.user.role === "admin") {
+          router.push("/admin");
+        } else {
+          router.push("/home");
+        }
+      } else {
+        alert(data.message || "Login gagal");
+      }
+    } catch (err) {
+      alert("Terjadi kesalahan saat login");
+    }
   };
 
   return (

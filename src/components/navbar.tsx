@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,9 +11,27 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const userObj = JSON.parse(userStr);
+        setUser(userObj);
+        if (userObj.role === "admin") setIsAdmin(true);
+        else setIsAdmin(false);
+      } else {
+        setUser(null);
+        setIsAdmin(false);
+      }
+    }
+  }, [typeof window !== "undefined" && localStorage.getItem("user")]);
+  if (isAdmin) return null;
 
   const isActive = (path: string) => pathname === path;
 
@@ -90,12 +108,33 @@ export default function Navbar() {
           <Button variant="ghost" size="icon" className="text-white">
             <Search size={20} />
           </Button>
-          <Button
-            className="bg-[#A87C2D] hover:bg-[#c8a047] text-white"
-            asChild
-          >
-            <Link href="/login">Log in</Link>
-          </Button>
+          {user ? (
+            <div className="relative group">
+              <Button variant="ghost" size="icon" className="text-white">
+                <User size={24} />
+              </Button>
+              <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg py-2 z-50 hidden group-hover:block">
+                <div className="px-4 py-2 text-gray-700 text-sm border-b">{user.full_name || user.email}</div>
+                <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Profile</Link>
+                <button
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm"
+                  onClick={() => {
+                    if (window.confirm('Apakah Anda yakin ingin logout?')) {
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                      window.location.href = "/login";
+                    }
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Button className="bg-[#A87C2D] hover:bg-[#c8a047] text-white" asChild>
+              <Link href="/login">Log in</Link>
+            </Button>
+          )}
         </div>
 
         {/* Mobile Navigation */}
