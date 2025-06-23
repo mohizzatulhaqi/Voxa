@@ -31,9 +31,10 @@ interface ReportDetail {
 
 export default function DetailLaporan() {
   const [report, setReport] = useState<ReportDetail | null>(null);
+  const [imageFailed, setImageFailed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [debugInfo, setDebugInfo] = useState<any>(null);
+  // const [debugInfo, setDebugInfo] = useState<any>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const reportId = searchParams.get("id");
@@ -68,7 +69,10 @@ export default function DetailLaporan() {
 
         const result = await res.json();
         if (result.success) {
-          setReport(result.data.report);
+          setReport({
+            ...result.data.report,
+            files: result.data.files ?? []
+          });
           
           // Debug: Test file access
           if (result.data.files && result.data.files.length > 0) {
@@ -134,8 +138,7 @@ export default function DetailLaporan() {
                 });
               }
             }
-            
-            setDebugInfo(debugData);
+            // setDebugInfo(debugData);
           }
         } else {
           setError(result.message || "Gagal mengambil detail laporan");
@@ -305,58 +308,30 @@ export default function DetailLaporan() {
                           {file.file_type === "image" ? (
                             <div className="relative">
                               {/* Test image display */}
-                              <div className="mb-2 p-2 bg-blue-50 rounded text-xs">
-                                <p><strong>Debug Info:</strong></p>
-                                <p>File: {file.file_name}</p>
-                                <p>URL: {fileUrl}</p>
-                                <p>Type: {file.file_type}</p>
-                                <p>MIME: {file.mime_type}</p>
-                              </div>
-                              
+                              {!imageFailed ? (
                               <img
                                 src={fileUrl}
                                 alt="Bukti foto"
                                 className="w-full max-h-64 object-cover rounded border-2 border-gray-200"
                                 onLoad={() => {
                                   console.log(`✅ Image loaded successfully: ${file.file_name}`);
-                                  console.log(`   URL: ${fileUrl}`);
-                                  // Remove debug info after successful load
-                                  const debugDiv = document.querySelector(`[data-file="${file.id}"]`) as HTMLElement;
-                                  if (debugDiv) {
-                                    debugDiv.style.display = 'none';
-                                  }
                                 }}
-                                onError={(e) => {
+                                onError={() => {
                                   console.error("❌ Failed to load image:", fileUrl);
-                                  console.error("   File name:", file.file_name);
-                                  console.error("   File type:", file.file_type);
-                                  console.error("   MIME type:", file.mime_type);
-                                  
-                                  // Try alternative URL
-                                  const altUrl = `http://localhost:3001/api/file/images/${file.file_name}`;
-                                  console.log(`🔄 Trying alternative URL: ${altUrl}`);
-                                  
-                                  e.currentTarget.style.display = 'none';
-                                  
-                                  // Show fallback with retry option
-                                  const fallback = document.createElement('div');
-                                  fallback.className = 'w-full h-32 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-500 p-4';
-                                  fallback.innerHTML = `
-                                    <p class="text-sm mb-2">Gagal memuat gambar: ${file.file_name}</p>
-                                    <div class="space-y-2">
-                                      <button onclick="window.open('${fileUrl}', '_blank')" class="text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
-                                        Coba URL Asli
-                                      </button>
-                                      <button onclick="window.open('${altUrl}', '_blank')" class="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">
-                                        Coba URL API
-                                      </button>
-                                    </div>
-                                  `;
-                                  e.currentTarget.parentNode?.appendChild(fallback);
+                                  setImageFailed(true);
                                 }}
                                 crossOrigin="anonymous"
-                                data-file={file.id}
                               />
+                              ) : (
+                              <div className="w-full h-32 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-500 p-4">
+                                  <p className="text-sm mb-2">Gagal memuat gambar: {file.file_name}</p>
+                                  <div className="space-y-2">
+                                    <button onClick={() => window.open(fileUrl, '_blank')} className="text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
+                                      Coba URL Asli
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           ) : file.file_type === "video" ? (
                             <div className="relative">
@@ -521,7 +496,7 @@ export default function DetailLaporan() {
           </CardContent>
         </Card>
 
-        {/* Debug Section - Only show in development */}
+        {/* Debug Section - Only show in development
         {process.env.NODE_ENV === 'development' && debugInfo && (
           <Card className="mt-8">
             <CardContent className="p-6">
@@ -581,7 +556,7 @@ export default function DetailLaporan() {
               </div>
             </CardContent>
           </Card>
-        )}
+        )} */}
       </div>
     </div>
   );
